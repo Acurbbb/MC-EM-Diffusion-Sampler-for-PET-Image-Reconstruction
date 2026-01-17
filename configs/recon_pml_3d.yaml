@@ -1,0 +1,17 @@
+recon:
+  imgsize: [176, 176, 176]
+  voxsize: [1.65, 1.65, 1.65]
+  subsets: 8
+  recon_iter: 8
+  scanner: 'nx-3d'
+  beta: 5
+  delta: 0.01
+  patch_size: 3
+  neigh_size: 3
+
+lm_data: /home/raid7/bybhuang/NX/data/human/ucdavis_format/20230905_ER323/final/merged_50-90min_2.8%_final.lm
+add_fac: /home/raid7/bybhuang/NX/data/human/ucdavis_format/20230905_ER323/final/merged_50-90min_2.8%_final.add_fac
+sens:    /home/raid7/bybhuang/NX/norm_ttli/build_sen_v4/sens/ER323/wattn_correct/uih3_sensimage_176s176voxelsize_1.65mm_all
+
+save_steps: 1
+

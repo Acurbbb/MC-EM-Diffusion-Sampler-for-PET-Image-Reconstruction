@@ -1,0 +1,16 @@
+recon:
+  imgsize: [128, 128]
+  voxsize: [1.65, 1.65]
+  beta: 0.1
+  delta: 0.01
+  patch_size: 3
+  neigh_size: 3
+
+phantom: ./phantom/bern_insert/345_027.npz
+system_matrix: ./misc/G_nontof_nx-2d_481x480_128x128_1.65mm.npz
+ipsf_model: ./misc/ipsf_nontof_nx-2d.npz
+count: 0.4
+
+maxiter: 50
+save_steps: 10
+

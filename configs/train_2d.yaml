@@ -1,0 +1,45 @@
+model:
+  target: diffusion.unet.unet_learn_emb.UNetModelWrapper
+  params:
+    dim: 
+    - 1
+    - 128
+    - 128
+    num_channels: 64
+    num_cond_channels: 0
+    attention_resolutions: 
+    - 8
+    num_res_blocks: 2
+    channel_mult:
+    - 1
+    - 1
+    - 2
+    - 3
+    - 4
+    num_head_channels: 64
+    num_heads: 4
+    use_scale_shift_norm: True
+    use_mid_attn: True
+
+diffusion:
+  schedule_sampler: uniform
+  target: diffusion.gaussian_diffusion_alone.GaussianDiffusion
+  params:
+    timesteps: 1000
+    sampling_timesteps: 200
+    objective: pred_v
+    beta_schedule: linear
+    eta: 0.1
+
+scheduler_config:
+  lambda_fn_type: const
+
+data:
+  train:
+    batch_size: 128
+    num_workers: 4
+    target: utils.utils.NumpyImageDataset
+    params:
+      folder_path: /home/raid7/bybhuang/UDPET/Bern-Inselspital-2022_0413/data
+  
+

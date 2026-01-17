@@ -1,0 +1,65 @@
+condition:
+  method: pet-dds
+  params:
+    lamda: 10 
+  cond_step_schedule:
+    name: subiter
+    subiter: 1
+    # name: linear
+    # t_start: 249
+    # t_end: 0
+    # interval_start: 2
+    # interval_end: 2
+
+diffusion:
+  schedule_sampler: uniform
+  clip_denoised: True
+  target: diffusion.patch_diffusion_alone.ConditionalDiffusion
+  params:
+    timesteps: 1000
+    sampling_timesteps: 200
+    objective: pred_v
+    beta_schedule: linear
+    eta: 0.1
+    clip_x0: [-1., 1.]
+
+recon:
+  imgsize: [144, 144, 144]
+  voxsize: [1.65, 1.65, 1.65]
+  patch_size: [40, 40, 40]
+  subsets: 8
+  pre_recon_iter: 4
+  max_intensity_perct: 99.999
+  scanner: 'nx-3d'
+
+model:
+  target: diffusion.unet.unet_learn_emb.UNetModelWrapper
+  params:
+    dim:
+    - 1
+    - 40
+    - 40
+    - 40
+    num_channels: 96
+    attention_resolutions:
+    - 1
+    num_res_blocks: 2
+    channel_mult:
+    - 1
+    - 2
+    - 3
+    - 4
+    num_head_channels: 64
+    num_heads: 4
+    use_scale_shift_norm: true
+    reduce_depth: true
+    use_mid_attn: false
+
+ckpt_path: /path/to/your/checkpoint/ckpt_150000.pt
+
+lm_data: /path/to/your/list-mode/data/merged_50-90min_2.0%_final.lm
+add_fac: /path/to/your/list-mode-additive-factor/merged_50-90min_2.0%_final.add_fac
+sens:    /path/to/your/sensitivity/image/uih3_sensimage_176s176voxelsize_1.65mm_all
+
+save_steps: 0
+

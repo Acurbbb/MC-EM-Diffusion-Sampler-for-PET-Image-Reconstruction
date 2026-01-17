@@ -1,0 +1,69 @@
+model:
+  target: diffusion.unet.unet_learn_emb.UNetModelWrapper
+  params:
+    dim: 
+    - 1
+    - 40
+    - 40
+    - 40
+    num_channels: 96
+    attention_resolutions: 
+    - 1
+    num_res_blocks: 2
+    channel_mult:
+    - 1
+    - 2
+    - 3
+    - 4
+    num_head_channels: 64
+    num_heads: 4
+    use_scale_shift_norm: True
+    reduce_depth: True
+    use_mid_attn: False
+
+diffusion:
+  schedule_sampler: uniform
+  target: diffusion.patch_diffusion_alone.GaussianDiffusion
+  params:
+    timesteps: 1000
+    sampling_timesteps: 1000
+    objective: pred_v
+    beta_schedule: linear
+
+scheduler_config:
+  lambda_fn_type: warmup_and_anneal
+  warmup_step: 10000
+  plateau_step: 260000
+  plateau_lambda: 0.1
+  start_lambda: 0.1
+
+data:
+  train:
+    batch_size: 20
+    num_workers: 4
+    target: utils.utils.RandomPaddedPatchDataset3D
+    params:
+      data_dir: /home/raid7/bybhuang/UDPET/Bern-Inselspital-2022_3d_144x144x144_99.999prct/data
+      patch_size: [40,40,40]
+      height: 144
+      width: 144
+      patches_per_volume: 64
+      dtype: float32
+      data_normalization: zero_one
+      empty_frac_threshold: 0.99
+      empty_thresh: 0.05
+      max_resample: 1   
+      augment_shift: [15,15,15]
+  cropper:
+    target: utils.utils.RandomCropper
+    params:
+      patch_sizes:
+        - [40,40,40]
+        - [32,32,32]
+        - [16,16,16]
+      patch_probs: [0.5,0.3,0.2]
+       
+validation:
+  eta: 0.1
+  
+
