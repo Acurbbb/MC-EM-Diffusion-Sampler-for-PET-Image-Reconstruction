@@ -1,0 +1,35 @@
+name: guided-diff
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  # core scientific stack (from conda to avoid pip/conda clashes)
+  - numpy=2.1
+  - pandas=2.2.*        # matches py3.10 + numpy2
+  - matplotlib
+  - jinja2
+  - pyyaml
+  - lmdb
+  - psutil
+  - tqdm
+  - ipykernel
+  - tensorboard
+  - omegaconf
+  # keep these basic libs unpinned; solver will pick compatible ones
+  - ca-certificates
+  - certifi
+  - openssl
+  - pip:
+      - --index-url https://download.pytorch.org/whl/cu124
+      - torch==2.6.0
+      - torchvision==0.21.0
+      - torchaudio==2.6.0
+      - absl-py==2.3.1
+      - einops==0.8.1
+      - tensorboard-data-server==0.7.2
+      - torch-tb-profiler==0.4.3
+      - protobuf==6.31.1
